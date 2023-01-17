@@ -1,20 +1,30 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from "react-native";
 import generalStyles from "../utils/styles";
 
-interface ButtonProps {
-  onPress?(): void;
+interface CustomButtonProps extends TouchableOpacityProps {
   title: string;
 }
 
-const Button = ({ onPress, title }: ButtonProps): JSX.Element => {
+const Button = (props: CustomButtonProps): JSX.Element => {
+  const { title, style, ...buttonProps } = props;
+
   return (
     <TouchableOpacity
-      style={styles.container}
       activeOpacity={0.6}
-      onPress={onPress}
+      style={[styles.container, style]}
+      {...buttonProps}
     >
-      <Text style={styles.title}>{title}</Text>
+      <Text
+        style={[styles.title, buttonProps.disabled && { color: "lightgray" }]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
