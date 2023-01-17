@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import HomeScreen from "./src/screens/Home";
 
 const client = new ApolloClient({
-  uri: "https://racing-server.herokuapp.com/",
+  uri: "https://racing-server.herokuapp.com/graphql/",
   cache: new InMemoryCache(),
 });
 

@@ -5,5 +5,10 @@ App built for testing my knowledge
 ### TODOs
 
 - [x] configure ts
-- [ ] install/configure apollo client for fetching GraphQL data nicely
+- [x] apollo client for fetching GraphQL data nicely
+- [x] codegen for getting types in the easier way
 - [ ] create a simple UI to show all the data retrieved
+
+---
+
+- [ ] use env variables to reference the root data endpoint

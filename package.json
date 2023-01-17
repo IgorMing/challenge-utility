@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "compile": "graphql-codegen",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -17,10 +18,13 @@
     "graphql": "^16.6.0",
     "react": "18.1.0",
     "react-native": "0.70.5",
-    "typescript": "^4.6.3"
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@graphql-codegen/cli": "^2.16.4",
+    "@graphql-codegen/client-preset": "^1.2.6",
+    "ts-node": "^10.9.1"
   },
   "private": true
 }
