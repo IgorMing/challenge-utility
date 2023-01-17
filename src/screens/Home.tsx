@@ -11,7 +11,12 @@ import {
 import Button from "../components/Button";
 import Header from "../components/Header";
 import ListItem from "../components/ListItem";
-import { RaceContext, RaceContextProps, Status } from "../utils/RaceContext";
+import {
+  GeneralStatus,
+  RaceContext,
+  RaceContextProps,
+  RacersState,
+} from "../utils/RaceContext";
 import { Racer } from "../__generated__/graphql";
 
 const GET_RACERS = gql`
@@ -28,12 +33,25 @@ const GET_RACERS = gql`
 const HomeScreen = (): JSX.Element => {
   const [getRacers, { loading, data }] = useLazyQuery(GET_RACERS);
   const isEmpty = useMemo(() => !data, [data]);
-  const [status, setStatus] = useState<Status>(Status.NOT_YET);
+  const [status, setStatus] = useState<GeneralStatus>(GeneralStatus.NOT_YET);
+  const [racersMap, setRacers] = useState<RacersState>(null);
+  // const sortedRacers = useMemo(() => {
+  //   if (!racersMap) {
+  //     return;
+  //   }
+
+  //   return Object.values(racersMap).sort((a, b) =>
+  //     a.winLikelihood > b.winLikelihood ? 1 : -1
+  //   );
+  // }, [racersMap]);
+
   const contextValues = useMemo<RaceContextProps>(
     () => ({
       status,
+      setRacers,
+      racersMap,
     }),
-    [status]
+    [racersMap, status]
   );
 
   const renderItem: ListRenderItem<Racer> = ({ item }) => {
@@ -54,10 +72,10 @@ const HomeScreen = (): JSX.Element => {
             />
           ) : (
             <Button
-              disabled={status === Status.IN_PROGRESS}
+              disabled={status === GeneralStatus.IN_PROGRESS}
               title="Start race!"
               onPress={() => {
-                setStatus(Status.IN_PROGRESS);
+                setStatus(GeneralStatus.IN_PROGRESS);
               }}
             />
           )}
