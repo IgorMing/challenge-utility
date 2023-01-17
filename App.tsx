@@ -1,20 +1,18 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import HomeScreen from "./src/screens/Home";
+
+const client = new ApolloClient({
+  uri: "https://racing-server.herokuapp.com/",
+  cache: new InMemoryCache(),
+});
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <ApolloProvider client={client}>
       <StatusBar style="auto" />
-    </View>
+      <HomeScreen />
+    </ApolloProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
