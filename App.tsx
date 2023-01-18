@@ -1,10 +1,9 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import HomeScreen from "./src/screens/Home";
 
 const client = new ApolloClient({
-  uri: "https://racing-server.herokuapp.com/graphql/",
+  uri: "https://ba6gijdps7.execute-api.us-east-1.amazonaws.com/graphql",
   cache: new InMemoryCache(),
 });
 

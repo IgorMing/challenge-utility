@@ -1,7 +1,7 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "https://racing-server.herokuapp.com/graphql/",
+  schema: "https://ba6gijdps7.execute-api.us-east-1.amazonaws.com/graphql",
   documents: ["src/**/*.tsx"],
   generates: {
     "./src/__generated__/": {
