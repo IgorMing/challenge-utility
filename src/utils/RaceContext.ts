@@ -1,4 +1,5 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
+import { Racer } from "../__generated__/graphql";
 
 export enum RacerStatus {
   NOT_YET = "not_yet",
@@ -15,13 +16,14 @@ export enum GeneralStatus {
 export type RacersState = Map<string, RacerStateDetails>;
 
 export interface RacerStateDetails {
-  status: RacerStatus;
+  status?: RacerStatus;
   winLikelihood?: number;
 }
+
+export type CompleteRacer = RacerStateDetails & Racer;
+
 export interface RaceContextProps {
   status: GeneralStatus;
-  setRacers: Dispatch<SetStateAction<RacersState>>;
-  racersMap: RacersState;
 }
 
 export const RaceContext = createContext<RaceContextProps>(null);

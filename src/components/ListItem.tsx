@@ -1,68 +1,63 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { generateRacerWinLikelihoodCalculator } from "../utils";
-import { formatOdds, showStatusByKey } from "../utils/format";
-import { GeneralStatus, RaceContext, RacerStatus } from "../utils/RaceContext";
+import { formatOdds } from "../utils/format";
+import { GeneralStatus, RaceContext } from "../utils/RaceContext";
 import { RacerColor } from "../__generated__/graphql";
+import ListItemInfo from "./ListItemInfo";
+import Separator from "./Separator";
 import Text from "./Text";
 
 interface ListItemProps {
   color: RacerColor;
   title: string;
+  likelihood?: number;
+  weight?: number;
+  onComplete(title: string, likelihood: number): void;
+  status: string;
 }
 
-const ListItem = ({ color, title }: ListItemProps) => {
+const ListItem = ({
+  color,
+  likelihood,
+  title,
+  onComplete,
+  status,
+  weight,
+}: ListItemProps) => {
   const formattedColor = useMemo(() => color.toLocaleLowerCase(), [color]);
-  const { status: raceStatus, setRacers, racersMap } = useContext(RaceContext);
-  const externalReference = useMemo(() => {
-    if (!racersMap) {
-      return null;
-    }
-    return racersMap[title];
-  }, [racersMap, title]);
-
-  // set the initial value for the racers
-  useEffect(() => {
-    setRacers((prevState) => ({
-      ...prevState,
-      [title]: { status: RacerStatus.NOT_YET },
-    }));
-  }, [setRacers, title]);
+  const { status: raceStatus } = useContext(RaceContext);
+  const titleRef = useRef(title);
 
   useEffect(() => {
+    const generateLikelihood = generateRacerWinLikelihoodCalculator();
     if (raceStatus === GeneralStatus.IN_PROGRESS) {
-      setRacers((prevState) => ({
-        ...prevState,
-        [title]: { status: RacerStatus.IN_PROGRESS },
-      }));
-      const generateLikelihood = generateRacerWinLikelihoodCalculator();
       generateLikelihood((likelihood) => {
-        setRacers((prevState) => ({
-          ...prevState,
-          [title]: {
-            status: RacerStatus.CALCULATED,
-            winLikelihood: likelihood,
-          },
-        }));
+        onComplete(titleRef.current, likelihood);
       });
     }
-  }, [raceStatus, setRacers, title]);
+  }, [onComplete, raceStatus]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentBlock}>
-        <View style={[styles.square, { backgroundColor: formattedColor }]} />
-        <Text>{title}</Text>
+    <>
+      <View style={styles.container}>
+        <View style={styles.contentBlock}>
+          <View style={[styles.square, { backgroundColor: formattedColor }]} />
+          <View>
+            <Text bold variant="subtitle">
+              {title}
+            </Text>
+            <ListItemInfo label="weight" value={weight} />
+            <ListItemInfo label="color" value={formattedColor} />
+          </View>
+        </View>
+        <View style={styles.contentBlock}>
+          <Text>{status}</Text>
+          {likelihood && <Text>({formatOdds(likelihood)}%)</Text>}
+        </View>
       </View>
-      <View style={styles.contentBlock}>
-        <Text>
-          {showStatusByKey(externalReference?.status ?? RacerStatus.NOT_YET)}
-        </Text>
-        {externalReference?.winLikelihood && (
-          <Text>({formatOdds(externalReference?.winLikelihood)}%)</Text>
-        )}
-      </View>
-    </View>
+      <Separator />
+    </>
   );
 };
 
@@ -71,6 +66,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingVertical: 16,
   },
   contentBlock: {
     alignItems: "center",
