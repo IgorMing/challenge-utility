@@ -2,7 +2,12 @@
 
 App built for testing my knowledge.
 
-**Note:** Unfortunately, I stopped getting data from the GraphQL service. So, for that reason, I decided to delivery without ordering the data as the guide suggested. But no worries, the app is running well anyways. The only requirement for accomplishing it is having the GraphQL service endpoint working as expected.
+**NOTE:** The last requirement, related to order the positions based from higher to lower likelihood, required me to change how I've had architectured the ListItem component.
+First I've made it with some ephemeral states, which was a huge problem when I had to order it based on a data calculated into a child component, and keep the entire data placed into the parent layer component. So I had to move all the logic and re-architecture the solution to work well.
+
+Additionally, for real apps the business logic would be separated by some library or on custom hooks. I decided to keep like that because I think this note might be enough to expose my real concerns about code quality.
+
+---
 
 ## Getting started
 
@@ -28,6 +33,10 @@ $ yarn ios # or yarn android
 
 That's all you need! Expo does everything behind the scenes for letting the app up and running.
 
+In the last two hours, I put some efforts trying to figure out an infinite loop behavior that was happening after the changes, and it was kinda tricky to find.
+
+---
+
 > **PS:** The notes below are just a personal way that I'm used to use for following the steps of my work. I left it below in case you'd like to check.
 
 ## TODOs
@@ -38,8 +47,4 @@ That's all you need! Expo does everything behind the scenes for letting the app 
 - [x] make eslint ready
 - [x] create a UI to show all the data retrieved
 - [x] get calculated odds and show it
-- [ ] order retrieved data
-
----
-
-- [ ] use env variables to reference the root data endpoint
+- [x] order retrieved data
