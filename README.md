@@ -7,6 +7,10 @@ First I've made it with some ephemeral states, which was a huge problem when I h
 
 Additionally, for real apps the business logic would be separated by some library or on custom hooks. I decided to keep like that because I think this note might be enough to expose my real concerns about code quality.
 
+## Preview
+
+https://user-images.githubusercontent.com/8928206/213335571-715f2804-c9d5-4a44-aa7d-8e6cc82056e8.mov
+
 ---
 
 ## Getting started
