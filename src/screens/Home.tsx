@@ -12,13 +12,13 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import ListItem from "../components/ListItem";
 import { showStatusByKey } from "../utils/format";
+import { RaceContext } from "../utils/RaceContext";
 import {
   CompleteRacer,
   GeneralStatus,
-  RaceContext,
   RaceContextProps,
   RacerStatus,
-} from "../utils/RaceContext";
+} from "../utils/types";
 
 const GET_RACERS = gql`
   query {

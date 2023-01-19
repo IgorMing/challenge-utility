@@ -1,4 +1,4 @@
-import { RacerStatus } from "./RaceContext";
+import { RacerStatus } from "./types";
 
 export function showStatusByKey(status: RacerStatus): string {
   switch (status) {
